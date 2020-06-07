@@ -7,28 +7,63 @@
 
 {% block content %}
 <div class="container">
+<div class="mx-auto">
+	CHANGE PRICE FORM
+	</form>
+</div>
+<div class="mx-auto my-5">
+	{% if user_products %}
+		<table style="width:100%">
 
-	<table style="width:100%">
-		
+		{% for product in user_products %}
 		<tr>
-			<th>Image</th>
-			<th>Product Name</th>
-			<th>Price</th>
-			<th>Last Update</th>
+			<th><a href="{{ product.product_url }}" target="_blank"><img src="{{ product.image_url }}" width="50" height="100"></th></a>
+			<th><a href="{% url 'index:remove-product' pk=product.id %}" class="btn btn-warning">Remove from wishlist</a></th>
+			{% if product.price < request.user.userprofile.accepted_price %}
+			<th>This product's price is below {{ request.user.userprofile.accepted_price }} zł</th>
+			{% elif product.price > request.user.userprofile.accepted_price %}
+			<th>drogo</th>
+			{% endif %}
 		</tr>
-		{% if products %}
-			{% for product in products %}
-				<tr>
-					<th><a href="{{ product.product_url }}" target="_blank"><img src="{{ product.image_url }}" width="100" height="200"></th></a>
-					<th>{{ product.name }}</th>
-					<th>{{ product.price }} zł</th>
-					<th>{{ product.last_update }}</th>
-				</tr>
-			{% endfor %}
-		{% endif %}
-	</table> 
+		{% endfor %}
+		</table>
+	{% endif %}
+</div>
+<div class="col-md-10 mx-auto mb-5">
+		{% if user.is_authenticated %}
+		<button class="btn btn-primary offset-5" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+			Show All
+			</button>
 
+		<div class="collapse mb-5" id="collapseExample">
+	
+	
+			<table style="width:100%">
+				
+				<tr>
+					<th>Image</th>
+					<th>Product Name</th>
+					<th>Price</th>
+					<th>Last Update</th>
+					<th>Add to wishlist</th>
+				</tr>
+				{% if products %}
+					{% for product in products %}
+						<tr>
+							<th><a href="{{ product.product_url }}" target="_blank"><img src="{{ product.image_url }}" width="50" height="100"></th></a>
+							<th>{{ product.name }}</th>
+							<th>{{ product.price }} zł</th>
+							<th>{{ product.last_update }}</th>
+							<th><a href="{% url 'index:add-product' pk=product.id %}"class="btn btn-success">Add</a></th>
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</table> 
+		</div>
+		
+	</div>
+	
 </div>
 
-
+	{% endif %}
 {% endblock content %}

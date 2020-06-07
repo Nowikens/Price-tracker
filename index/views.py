@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Product
-
+from accounts.models import UserProfile
 import requests
 from bs4 import BeautifulSoup
 
@@ -53,6 +53,30 @@ def index(request):
             updating_product.last_update = warsaw_now
             updating_product.save()
             
+    
+    user_products = []
+    if request.user.is_authenticated:
+        user_products = Product.objects.filter(userprofile=request.user.userprofile.id)
+    
+    
+    
     products = Product.objects.all()
-    context = {'products': products}
+    context = {'products': products, 'user_products': user_products}
     return render(request, 'index/home.html', context)
+    
+def add_wanted_product(request, pk):
+    product_to_add = Product.objects.get(pk=pk)
+    user = UserProfile.objects.get(pk=request.user.userprofile.id)
+    
+    user.wanted_products.add(product_to_add)
+    
+    return redirect('index:home')
+
+
+def remove_wanted_product(request, pk):
+    product_to_remove = Product.objects.get(pk=pk)
+    user = UserProfile.objects.get(pk=request.user.userprofile.id)
+    
+    user.wanted_products.remove(product_to_remove)
+    
+    return redirect('index:home')

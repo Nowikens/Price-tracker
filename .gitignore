@@ -1,0 +1,12 @@
+/index/migrations
+/projectFolder/migrations
+/accounts/migrations
+
+/index/__pycache__
+/accounts/__pycache__
+/projectFolder/__pycache__
+
+db.sqlite3
+
+.env
+

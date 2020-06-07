@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'index.apps.IndexConfig',
+    'accounts.apps.AccountsConfig',
+    'crispy_forms',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,3 +126,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static') 
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
