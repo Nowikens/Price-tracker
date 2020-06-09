@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
-from .forms import UserProfileForm
+from .forms import UserProfileForm, ChangePriceForm
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import authenticate, login, logout
+
+from accounts.models import UserProfile
 
 # Create your views here.
 
@@ -50,6 +53,32 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('accounts:login')
+
+
+
+
+def change_wanted_price(request):
+    form = ChangePriceForm()
     
-def change_wanted_price(request, price):
-    return redirect('index:home')
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            new_price = request.POST['accepted_price']
+            current_user = UserProfile.objects.get(pk=request.user.userprofile.id)
+            
+            current_user.accepted_price = new_price
+            current_user.save()
+            return redirect('index:home')
+        
+    context = {'form': form}
+    return render(request, 'accounts/changePrice.html', context)
+    pass
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

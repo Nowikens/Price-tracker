@@ -22,4 +22,5 @@ urlpatterns = [
     path('', views.index, name="home"),
     path('add/<int:pk>', views.add_wanted_product, name="add-product"),
     path('remove/<int:pk>', views.remove_wanted_product, name="remove-product"),
+
 ]

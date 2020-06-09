@@ -80,3 +80,4 @@ def remove_wanted_product(request, pk):
     user.wanted_products.remove(product_to_remove)
     
     return redirect('index:home')
+    

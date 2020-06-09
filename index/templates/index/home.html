@@ -7,10 +7,7 @@
 
 {% block content %}
 <div class="container">
-<div class="mx-auto">
-	CHANGE PRICE FORM
-	</form>
-</div>
+
 <div class="mx-auto my-5">
 	{% if user_products %}
 		<table style="width:100%">
@@ -22,7 +19,9 @@
 			{% if product.price < request.user.userprofile.accepted_price %}
 			<th>This product's price is below {{ request.user.userprofile.accepted_price }} zł</th>
 			{% elif product.price > request.user.userprofile.accepted_price %}
-			<th>drogo</th>
+			<th>This product's price is above {{ request.user.userprofile.accepted_price }} zł</th>
+			{% else %}
+			<th>This product currently costs {{ product.price }}</th>
 			{% endif %}
 		</tr>
 		{% endfor %}

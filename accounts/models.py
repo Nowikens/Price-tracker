@@ -5,7 +5,7 @@ from index.models import Product
 
 class UserProfile(models.Model):
     user_model            = models.OneToOneField(User, on_delete=models.CASCADE)
-    accepted_price        = models.FloatField()
+    accepted_price        = models.FloatField(null=True)
     wanted_products       = models.ManyToManyField(Product)
     
     

@@ -1,0 +1,23 @@
+{% extends 'index/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Change price{% endblock%}
+
+
+{% block content %}
+<div class="container">
+	<div class="mb-3">
+		<p class="mx-auto">Your current accepted price is {{ request.user.userprofile.accepted_price }}</p>
+	</div>
+
+	<div class="form-group">
+		<form method="POST">
+			{% csrf_token%}
+
+			{{ form | crispy }}
+			<input class="btn btn-primary" value="Change expected price" type="submit">
+		</form>
+	</div>
+</div>
+{% endblock content %}
